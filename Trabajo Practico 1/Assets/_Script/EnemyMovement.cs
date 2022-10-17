@@ -52,8 +52,10 @@ public class EnemyMovement : MonoBehaviour
         {
             m_collider.enabled = false;
             agent.isStopped = true;
+            
         }
     }
+
 
     private void OnDrawGizmos()
     {
@@ -63,7 +65,8 @@ public class EnemyMovement : MonoBehaviour
         Gizmos.DrawRay(transform.position, transform.forward * maxDistanceRayHit);
         //Draw a cube at the maximum distance
         //Gizmos.DrawWireCube(m_collider.bounds.center + transform.forward * maxDistanceRayHit, transform.localScale * 2f);
-        Gizmos.DrawSphere(m_collider.bounds.center + transform.forward * maxDistanceRayHit, radioSphereCast);
+        //Gizmos.DrawSphere(m_collider.bounds.center + transform.forward * maxDistanceRayHit, radioSphereCast);
     }
+
 
 }

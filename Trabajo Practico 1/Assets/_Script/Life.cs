@@ -5,7 +5,7 @@ using UnityEngine;
 public class Life : MonoBehaviour
 {
     public float maxLife;
-    private float currentLife;
+    public float currentLife;
 
     private Animator m_Animator;
     public bool isAlive= true;
@@ -24,6 +24,15 @@ public class Life : MonoBehaviour
         {
             isAlive = false;
             m_Animator.SetTrigger("Die");
+           
+            if (gameObject.tag == "Enemy")
+            {
+                ManagerControllerLvl1.Instance.EnemyDie();
+            }
+            else
+            {
+                ManagerControllerLvl1.Instance.PlayerDie();
+            }
         }
     }
 
@@ -32,6 +41,7 @@ public class Life : MonoBehaviour
         if (currentLife > 0)
         {
             currentLife -= damage;
+            Debug.Log($"El Personaje {gameObject.name} recibio {damage} de daño, le queda {currentLife} de vida");
         }
     }
 }

@@ -6,33 +6,49 @@ public class Player : MonoBehaviour
 {
     Collider _collider;
     Animator _animator;
+    Life m_Life;
+    AnimationFlag m_animationFlag;
+    Rigidbody rb;
+
+
+    public Vector3 targetPosition;
     Vector3 directionMove;
+    Vector3 direction;
+    Vector3 pointGranade;
+
+    RaycastHit cameraRayHit;
+    Ray cameraRay;
+
+    public GameObject m_Granade;
+    public Transform m_granadePoint;
+
     public float movementVelocity = 2f;
     public float maxDistanceRayShoot;
     public float timeBetweenShoot = 0.8f;
     public float lastTimeShoot;
     public float damage;
     public LayerMask layersToDamage;
-    Ray cameraRay;
-    RaycastHit cameraRayHit;
 
-    Vector3 direction;
     bool isShooting = false;
-    Life m_Life;
+    bool isThrow = false;
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
         _collider = GetComponent<Collider>();
         m_Life = GetComponent<Life>();
+        m_animationFlag = GetComponentInChildren<AnimationFlag>();
+        rb = GetComponent<Rigidbody>();
         lastTimeShoot = Time.time;
-        
+
     }
     private void Update()
     {
-        if (m_Life.isAlive)
+        if (m_Life.isAlive && !m_animationFlag.throwGranade)
         {
-            directionMove = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            isThrow = false;
+            _animator.SetBool("Shoot", isShooting);
+            directionMove = new Vector3(0, 0, Input.GetAxis("Vertical"));
 
             _animator.SetFloat("VelX", directionMove.x);
             _animator.SetFloat("VelZ", directionMove.z);
@@ -41,14 +57,14 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(cameraRay, out cameraRayHit))
             {
-                if (cameraRayHit.transform.tag == "Ground")
-                {
-                    Vector3 targetPosition = new Vector3(cameraRayHit.point.x, transform.position.y, cameraRayHit.point.z);
+            //    if (cameraRayHit.transform.tag == "Ground")
+                //{
+                    targetPosition = new Vector3(cameraRayHit.point.x, transform.position.y, cameraRayHit.point.z);
                     transform.LookAt(targetPosition);
-                }
+             //   }
             }
 
-            if (Input.GetButtonDown("Fire1") && !isShooting)
+            if (Input.GetButton("Fire1") && !isShooting && !isThrow)
             {
                 isShooting = true;
                 _animator.SetBool("Shoot", isShooting);
@@ -59,14 +75,39 @@ public class Player : MonoBehaviour
                 isShooting = false;
                 _animator.SetBool("Shoot", isShooting);
             }
+
+            if (Input.GetButtonDown("Fire2") && isShooting)
+            {
+                pointGranade = transform.position;
+                m_animationFlag.throwGranade = true;
+                isThrow = true;
+                _animator.SetTrigger("Throw");
+                isShooting = false;
+            }
         }
+        else if (!m_Life.isAlive)
+        {
+            _collider.enabled = false;
+        }
+
+        if (m_animationFlag.tossGranade)
+        {
+            GameObject granade = Instantiate(m_Granade,m_granadePoint.position, transform.rotation);
+            m_animationFlag.tossGranade = false;
+            
+        }
+
     }   
     private void FixedUpdate()
     {
+        if (rb.velocity != Vector3.zero)
+        {
+            rb.velocity = Vector3.zero;
+        }
         if (m_Life.isAlive)
         {
             direction = new Vector3(cameraRayHit.point.x - transform.position.x, 0, cameraRayHit.point.z - transform.position.z);
-            if (!isShooting)
+            if (!isShooting && !isThrow)
             {
                 transform.Translate(directionMove * Time.deltaTime * movementVelocity);
                 //_rigidbody.AddForce(movementVelocity * Time.deltaTime * directionMove, ForceMode.Acceleration);
