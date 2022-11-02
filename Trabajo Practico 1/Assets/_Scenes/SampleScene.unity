@@ -918,6 +918,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyRun
       objectReference: {fileID: 0}
+    - target: {fileID: 744840682485835046, guid: 042ff05508badfa41b3d83c9e156c1ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 042ff05508badfa41b3d83c9e156c1ac, type: 3}
 --- !u!1001 &3587403345241632630
@@ -987,6 +991,10 @@ PrefabInstance:
     - target: {fileID: 3685853755948922713, guid: 02339f3122ec736409c4b7c16d7d6619, type: 3}
       propertyPath: m_Name
       value: CopZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685853755948922713, guid: 02339f3122ec736409c4b7c16d7d6619, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3685853755948922714, guid: 02339f3122ec736409c4b7c16d7d6619, type: 3}
       propertyPath: m_RootOrder
@@ -1092,6 +1100,10 @@ PrefabInstance:
     - target: {fileID: 5495597439211692599, guid: b8ec93302d4d18246a5bd128a6f1f3e6, type: 3}
       propertyPath: m_Name
       value: ZombieGirl
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495597439211692599, guid: b8ec93302d4d18246a5bd128a6f1f3e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8ec93302d4d18246a5bd128a6f1f3e6, type: 3}
