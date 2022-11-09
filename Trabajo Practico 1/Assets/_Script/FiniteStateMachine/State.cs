@@ -4,16 +4,21 @@ using UnityEngine;
 
 public abstract class State
 {
-    protected Player player;
-    protected 
-    protected void LogicUpdate()
-    {
+    protected Entity entity;
+    protected FiniteStateMachine finitestateMachine;
 
+    public State(Entity entity, FiniteStateMachine finitestateMachine)
+    {
+        this.entity = entity;
+        this.finitestateMachine = finitestateMachine;
     }
 
-    protected void PhysicsLogic()
-    {
+    public abstract void Entry();
 
-    }
+    public abstract void LogicUpdate();
+
+    public abstract void PhysicsLogic();
+
+    public abstract void Exit();
     
 }

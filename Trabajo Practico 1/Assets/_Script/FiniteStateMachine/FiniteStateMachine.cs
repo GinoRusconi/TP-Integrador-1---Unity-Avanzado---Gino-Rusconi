@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class FiniteStateMachine
 {
-    
+    State CurrentState;
+
+    public void SetState(State nextState)
+    {
+        CurrentState.Exit();
+        CurrentState = nextState;
+        CurrentState.Entry();
+    }
 }
