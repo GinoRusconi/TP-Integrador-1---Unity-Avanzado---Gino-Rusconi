@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : Entity
 {
     
     NavMeshAgent agent;
     Transform target;
-    Animator animator;
+    //Animator animator;
     private Life m_Life;
-    public Collider m_collider;
+    //public Collider m_collider;
 
     public LayerMask layersToDamage;
     public bool isAttaking = false;
@@ -23,8 +23,8 @@ public class EnemyMovement : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         agent.destination = target.position;
 
-        animator = GetComponentInChildren<Animator>();
-        m_collider = GetComponent<Collider>();
+        //animator = GetComponentInChildren<Animator>();
+        //m_collider = GetComponent<Collider>();
         m_Life = GetComponent<Life>();
     }
 
@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
         {
             //Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, maxDistanceRayHit, layersToDamage)
             //Physics.BoxCast(m_collider.bounds.center, transform.localScale, transform.forward, out RaycastHit m_Hit, transform.rotation, maxDistanceRayHit, layersToDamage)
-            if (Physics.SphereCast(m_collider.bounds.center, radioSphereCast, transform.forward, out RaycastHit m_Hit, maxDistanceRayHit, layersToDamage))
+            if (Physics.SphereCast(_Collider.bounds.center, radioSphereCast, transform.forward, out RaycastHit m_Hit, maxDistanceRayHit, layersToDamage))
             {
                 isAttaking = true;
                 agent.destination = transform.position;
@@ -47,10 +47,10 @@ public class EnemyMovement : MonoBehaviour
             }
 
             //Debug.DrawRay(transform.position, transform.forward * maxDistanceRayHit, Color.red);
-            animator.SetBool("Attack", isAttaking);
+            _Animator.SetBool("Attack", isAttaking);
         }else
         {
-            m_collider.enabled = false;
+            _Collider.enabled = false;
             agent.isStopped = true;
             
         }

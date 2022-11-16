@@ -6,24 +6,20 @@ public class Life : MonoBehaviour
 {
     public float maxLife;
     public float currentLife;
-
-    private Animator m_Animator;
     public bool isAlive= true;
 
 
 
-    void Awake()
+    protected virtual void Awake()
     {
-        m_Animator = GetComponentInChildren<Animator>();
         currentLife = maxLife;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (currentLife <= 0 && isAlive)
         {
             isAlive = false;
-            m_Animator.SetTrigger("Die");
            
             if (gameObject.tag == "Enemy")
             {
@@ -36,7 +32,7 @@ public class Life : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    protected void TakeDamage(float damage)
     {
         if (currentLife > 0)
         {
