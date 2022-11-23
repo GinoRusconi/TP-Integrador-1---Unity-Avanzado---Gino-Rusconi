@@ -182,7 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8154142ca8916fb48b07f351bf62e6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tanEnemy: Enemy2
   m_collider: {fileID: 5495597439211692555}
+  waitTimeToBackSpawn: 2
   layersToDamage:
     serializedVersion: 2
     m_Bits: 8
@@ -202,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 20
+  currentLife: 0
   isAlive: 1
 --- !u!114 &-915034577565375448
 MonoBehaviour:

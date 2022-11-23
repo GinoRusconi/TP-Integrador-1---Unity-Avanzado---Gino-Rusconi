@@ -7,8 +7,12 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     private Life _PlayerLife;
-    public Image _BarraDeVida;
     private float _MaxLife;
+    private QuestUI questUI;
+
+    public GameObject inventario;
+    public Image[] items;
+    public Image _BarraDeVida;
     public float timeToLerp;
     public GameObject menu;
 
@@ -17,6 +21,8 @@ public class UI : MonoBehaviour
     {
         _PlayerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<Life>();
         _MaxLife = _PlayerLife.maxLife;
+
+        questUI = GetComponentInChildren<QuestUI>();
     }
 
     void Update()
@@ -27,6 +33,35 @@ public class UI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             menu.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            questUI.gameObject.SetActive(true);
+        }else
+        {
+            questUI.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKey(KeyCode.I))
+        {
+            inventario.SetActive(true);
+        }
+        else
+        {
+            inventario.SetActive(false);
+        }
+    }
+
+    public void AddItem(Item item)
+    {
+        foreach (Image image in items)
+        {
+            if (image.sprite == null)
+            {
+                image.sprite = item.iconObject;
+                return;
+            }
         }
     }
 

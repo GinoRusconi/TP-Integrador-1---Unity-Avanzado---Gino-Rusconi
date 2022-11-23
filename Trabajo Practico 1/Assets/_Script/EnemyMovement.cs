@@ -5,17 +5,25 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    
+    public string tanEnemy;
+
     NavMeshAgent agent;
     Transform target;
     Animator animator;
     private Life m_Life;
     public Collider m_collider;
 
+    public float waitTimeToBackSpawn;
     public LayerMask layersToDamage;
     public bool isAttaking = false;
     public float maxDistanceRayHit;
     public float radioSphereCast;
+
+    private void OnEnable()
+    {
+        m_collider.enabled = true;
+        agent.isStopped = false;
+    }
 
     void Awake()
     {
@@ -52,10 +60,16 @@ public class EnemyMovement : MonoBehaviour
         {
             m_collider.enabled = false;
             agent.isStopped = true;
-            
+            StartCoroutine(BackToPool());
         }
     }
 
+    private IEnumerator BackToPool()
+    {
+        yield return new WaitForSeconds(waitTimeToBackSpawn);
+
+        EnemyPool.Current.SetEnemyToPool(this.gameObject, tanEnemy);
+    }
 
     private void OnDrawGizmos()
     {

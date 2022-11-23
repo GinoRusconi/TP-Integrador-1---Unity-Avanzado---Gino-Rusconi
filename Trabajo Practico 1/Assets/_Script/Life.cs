@@ -6,11 +6,16 @@ public class Life : MonoBehaviour
 {
     public float maxLife;
     public float currentLife;
+    
 
     private Animator m_Animator;
     public bool isAlive= true;
 
-
+    private void OnEnable()
+    {
+        currentLife = maxLife;
+        isAlive = true;
+    }
 
     void Awake()
     {
@@ -33,6 +38,8 @@ public class Life : MonoBehaviour
             {
                 ManagerControllerLvl1.Instance.PlayerDie();
             }
+
+            
         }
     }
 
@@ -44,4 +51,6 @@ public class Life : MonoBehaviour
             Debug.Log($"El Personaje {gameObject.name} recibio {damage} de daño, le queda {currentLife} de vida");
         }
     }
+
+    
 }

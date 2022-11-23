@@ -57,11 +57,11 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(cameraRay, out cameraRayHit))
             {
-            //    if (cameraRayHit.transform.tag == "Ground")
-                //{
+                if (cameraRayHit.transform.tag == "Ground")
+                {
                     targetPosition = new Vector3(cameraRayHit.point.x, transform.position.y, cameraRayHit.point.z);
                     transform.LookAt(targetPosition);
-             //   }
+                }
             }
 
             if (Input.GetButton("Fire1") && !isShooting && !isThrow)
